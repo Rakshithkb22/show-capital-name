@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>show capital name</title>
+</head>
+<body>
+    <div id="root"></div>
+    <!-- 
+        i) Get countries list from https://restcountries.eu (countries api)
+        ii) Display only the country name as a list
+        iii) Provide a button next to each of the country
+        iv) Display the capital name in alert box on clicking on the button
+    -->
+    <script>
+        const rootHandle = document.getElementById('root');
+        const h1Tag = document.createElement('h1');
+        rootHandle.appendChild(h1Tag);
+        const ulTag = document.createElement('ul');
+        rootHandle.appendChild(ulTag);
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', 'https://restcountries.com/v2/all');
+        xhr.send();
+        xhr.onload = function() {
+            const data = JSON.parse(xhr.responseText);
+            h1Tag.textContent = `Total Countries - ${data.length}`;
+            data.forEach((ele) => {
+                const liTag = document.createElement('li');
+                liTag.textContent = `${ele.name}`
+                ulTag.appendChild(liTag)
+                const btnTag = document.createElement('button')
+                btnTag.textContent = 'Show'
+                liTag.appendChild(btnTag)
+                btnTag.addEventListener('click', function() {
+                    alert(`${ele.capital}`)
+                })
+            })
+        }
+    </script>
+</body>
+</html>
